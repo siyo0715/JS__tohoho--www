@@ -107,3 +107,86 @@
 // user.name = "Tanaka";   // => Set name : Tanaka
 // user.name;       // => Get name : Tanaka
 
+
+
+
+// ____________________________________________________________________
+// 関数
+//_____________________________________________________________________
+
+
+function toSeconds(hour, min = 0, sec = 0) {
+  var answer = hour * 3600 + min * 60 + sec;
+  return(answer);
+}
+var sec = toSeconds(2);   // => 7200
+
+console.log(sec)
+//////////////////////////////////////////////////////////////////////////////
+function func(a, b, c, ...rest) {
+  document.write(a, b, c, rest);        // => 1, 2, 3, [4, 5, 6]
+}
+func(1, 2, 3, 4, 5, 6);
+
+
+///////////////////////////////////////////////////////////////////////////////
+// xx = 5;               // グローバル変数 xx に 5 を代入
+// yy = 5;               // グローバル変数 yy に 5 を代入
+
+// func();               // 関数 func() を呼び出す
+
+// alert("xx = " + xx);  // グローバル変数 xx を表示（5 が表示される）
+// alert("yy = " + yy);  // グローバル変数 yy を表示（8 が表示される）
+
+// function func() {
+//    var xx = 8;        // ローカル変数 xx に 8 を代入
+//    yy = 8;            // グローバル変数 yy に 8 を代入
+// }
+////////////////////////////////////////////////////////////////////////////////////
+// グローバルオブジェクトのname属性
+this.name = "Tanaka";
+
+// moduleオブジェクトのname属性
+var module = {
+  name: "Yamada",
+  getName: function() { return this.name; }
+};
+console.log(module)
+// moduleオブジェクトのname属性が参照される
+console.log(module.getName());                 // "Yamada"
+// グローバルコンテキストのため、thisはグローバルオブジェクトとなる
+var retrieveName = module.getName;
+console.log(this.name)
+console.log(retrieveName());                   // "Tanaka"
+
+// thisにmoduleを割り当てた状態で retrieveName() を呼び出す
+var boundGetName = retrieveName.bind(module);
+console.log(boundGetName());                   // "Yamada"
+
+/////////////////////////////////////////////////////////////////////////////////////////
+setTimeout(function() {
+    document.write("Callback function called!!");
+}, 2000);
+/////////////////////////////////////////////////////////////////////////////////////////
+function factorial(n) {
+  if (n <= 1) {
+    return 1;
+  }
+  return (n * factorial(n - 1));
+}
+console.log(factorial(5));
+
+/////////////////////////////////////////////////////////////////////////////////////
+function MyClass() {
+  window.setTimeout(function() { console.log(this) }, 1000); // Window オブジェクト
+  window.setTimeout(() => { console.log(this) }, 1000);      // MyClass オブジェクト
+}
+new MyClass();
+
+function func(a, b) {
+  var func1 = function(a, b) { console.log(arguments); }
+  func1(1, 2);    // [1, 2]
+  var func2 = (a, b) => { console.log(arguments); }
+  func2(3, 4);    // [5, 6]
+}
+func(5, 6);
